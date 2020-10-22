@@ -1,9 +1,8 @@
-var mass = [];
+var mass = ["picture/panda-face_1f43c.png", "picture/octopus_1f419.png","picture/hamster-face_1f439.png",
+    "picture/dog-face_1f436.png", "picture/cat-face_1f431.png", "picture/mouse-face_1f42d.png",
+    "picture/dog-face_1f436.png", "picture/hamster-face_1f439.png", "picture/mouse-face_1f42d.png" ,
+    "picture/octopus_1f419.png", "picture/panda-face_1f43c.png", "picture/cat-face_1f431.png"];
 var img=document.querySelectorAll('img');
-for (var h = 0; h < img.length; h++) {
-    mass.push(img[h].getAttribute('src'));
-}
-
 function shuffle(array) {
     var i = array.length;
     var j = 0;
@@ -18,8 +17,8 @@ function shuffle(array) {
 }
 
 shuffle(mass);
-for (var j = 0; j < img.length; j++) {
-    img[j].setAttribute('src', mass[j])
+for (var i = 0; i < img.length; i++) {
+    img[i].setAttribute('src', mass[i])
 }
 var flip = document.querySelectorAll('.flip');
 var counter_rotate=0;
@@ -63,35 +62,40 @@ function click(){
                 elem[0] = rotate[0].querySelector('img');
                 elem[1] = rotate[1].querySelector('img');
                 if (elem[0].src === elem[1].src) {
-                    rotate.forEach(function (elem){
-                        elem.querySelector('.back').classList.add('back_true');
-                    });
-                    counter_rotate = 0;
-                    rotate.pop();
-                    rotate.pop();
-                    couple_card++;
-                    if(couple_card===6) {
-                        setTimeout(() => {
-                            clearInterval(timerID);
-                            open();
-                            openWin();
-                        });
-                    }
+                    foundRight();
                 } else {
-                    rotate.forEach(function (elem){
-                        elem.querySelector('.back').classList.add('back_false');
-                    })
-                    counter_rotate = 0;
-                    backFalse[0]=rotate[0];
-                    backFalse[1]=rotate[1];
-                    rotate.pop();
-                    rotate.pop();
+                    foundFalse();
                 }
             }
         }
     }
 }
-
+function foundRight(){
+    rotate.forEach(function (elem){
+        elem.querySelector('.back').classList.add('back_true');
+    });
+    counter_rotate = 0;
+    rotate.pop();
+    rotate.pop();
+    couple_card++;
+    if(couple_card===6) {
+        setTimeout(() => {
+            clearInterval(timerID);
+            open();
+            openWin();
+        });
+    }
+}
+function foundFalse(){
+    rotate.forEach(function (elem){
+        elem.querySelector('.back').classList.add('back_false');
+    })
+    counter_rotate = 0;
+    backFalse[0]=rotate[0];
+    backFalse[1]=rotate[1];
+    rotate.pop();
+    rotate.pop();
+    }
 function time() {
     seconds = seconds - 1;
     if (seconds < 10) {
